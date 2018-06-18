@@ -1,0 +1,21 @@
+service: iopipe-go-acceptance-test-serverless
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: master
+  region: us-west-2
+  environment:
+    IOPIPE_TOKEN: ${env:IOPIPE_TOKEN}
+
+package:
+ exclude:
+   - ./**
+ include:
+   - ./bin/**
+
+functions:
+  success:
+    events:
+      - schedule: rate(10 minutes)
+    handler: bin/success
